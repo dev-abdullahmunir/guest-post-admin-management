@@ -1,0 +1,30 @@
+<?php
+
+namespace Modules\AdminManagement\Http\Requests;
+
+use App\Http\Requests\FormRequest;
+
+class StorePaymentRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'payment_type' => 'required|in:received,paid',
+            'amount' => 'required|numeric|min:0.01',
+            'currency' => 'nullable|string|max:10',
+            'payment_method' => 'required|string|max:100',
+            'transaction_id' => 'nullable|string|max:255',
+            'payment_date' => 'required|date',
+            'status' => 'nullable|in:completed,pending,failed,refunded',
+            'client_id' => 'nullable|exists:clients,id',
+            'vendor_id' => 'nullable|exists:sellers,id',
+            'order_item_id' => 'nullable|exists:order_items,id',
+            'notes' => 'nullable|string',
+        ];
+    }
+}
