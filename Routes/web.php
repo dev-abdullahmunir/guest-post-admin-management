@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\AdminManagement\Http\Controllers\DashboardController;
 use Modules\AdminManagement\Http\Controllers\PaymentController;
 use Modules\AdminManagement\Http\Controllers\ExpenseController;
+use Modules\AdminManagement\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,13 @@ use Modules\AdminManagement\Http\Controllers\ExpenseController;
 Route::get('/', [DashboardController::class, 'renderView'])->name('dashboard');
 Route::get('/payments', [PaymentController::class, 'renderView'])->name('payments');
 Route::get('/expenses', [ExpenseController::class, 'renderView'])->name('expenses');
+Route::get('/settings', [SettingController::class, 'renderView'])->name('settings');
+
+// Settings & White-Label Branding API
+Route::prefix('api/settings')->group(function () {
+    Route::get('/', [SettingController::class, 'index'])->name('api.settings.index');
+    Route::post('/', [SettingController::class, 'update'])->name('api.settings.update');
+});
 
 // Payments API
 Route::prefix('api/payments')->group(function () {
